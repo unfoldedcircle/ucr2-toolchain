@@ -48,5 +48,4 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-#make BR2_JLEVEL=16 $1 2>&1 | tee $1_build_$(date +"%Y%m%d_%H%M%S").log
 make $1 2>&1 | tee $1_build_$(date +"%Y%m%d_%H%M%S").log

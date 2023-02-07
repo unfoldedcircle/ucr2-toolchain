@@ -9,4 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - First public release using Buildroot 2022.02.9
 
+### Added
+- Docker cross-compile build image with static Qt.
+
 ---
