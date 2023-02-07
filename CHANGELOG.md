@@ -6,10 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
+_Changes for the next release will be listed here_
+
+---
+
+## 0.6.0
+
 ### Changed
 - First public release using Buildroot 2022.02.9
 
 ### Added
-- Docker cross-compile build image with static Qt.
-
----
+- Docker cross-compile build image with static Qt libraries.
