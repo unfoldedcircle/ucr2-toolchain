@@ -60,7 +60,7 @@ make -j$(nproc)
 3. Pre-built UCR2 toolchain SDK archive.
 4. Recommended: local web-server to download the SDK & Qt source archives.  
    E.g. from a Synology NAS Web Station or a simple nginx webserver.
-    - SDK archive path: `/archive/ucr2/0.6.0/ucr2-aarch64-toolchain-0.6.0-lite.tar.gz`
+    - SDK archive path: `/archive/ucr2/v0.6.0/ucr2-aarch64-toolchain-0.6.0-lite.tar.gz`
     - Qt archive path:  `/archive/qt/5.15/5.15.8/single/qt-everywhere-opensource-src-5.15.8.tar.xz`
 
 ### Docker Image

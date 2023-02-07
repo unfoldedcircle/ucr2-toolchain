@@ -36,7 +36,7 @@ RUN apt update -q \
 
 # install Buildroot SDK for the Remote Two
 RUN mkdir -p /opt \
-    && wget -qO- "$SDK_BASE_URL/${BUILDROOT_SDK_VERSION}/ucr2-aarch64-toolchain-${BUILDROOT_SDK_VERSION}${BUILDROOT_SDK_VERSION_VARIANT}.tar.gz" | tar -xz -C /opt \
+    && wget -qO- "$SDK_BASE_URL/v${BUILDROOT_SDK_VERSION}/ucr2-aarch64-toolchain-${BUILDROOT_SDK_VERSION}${BUILDROOT_SDK_VERSION_VARIANT}.tar.gz" | tar -xz -C /opt \
     && /opt/${BUILDROOT_SDK_NAME}/relocate-sdk.sh
 
 RUN wget -qO- ${QT_MIRROR}/archive/qt/${QT_VERSION_MINOR}/${QT_VERSION}/single/qt-everywhere-opensource-src-${QT_VERSION}.tar.xz | tar -xJ -C /opt
