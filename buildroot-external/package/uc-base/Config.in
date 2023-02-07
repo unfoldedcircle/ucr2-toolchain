@@ -1,0 +1,34 @@
+comment "Qt5 static needs host g++ >= 5.0, and a toolchain w/ gcc >= 5.0, wchar, NPTL, C++, dynamic library"
+	depends on !BR2_ARM_CPU_ARMV4
+	depends on !BR2_arc
+	depends on !BR2_INSTALL_LIBSTDCPP || !BR2_USE_WCHAR || \
+		!BR2_TOOLCHAIN_HAS_THREADS_NPTL || BR2_STATIC_LIBS || \
+		!BR2_HOST_GCC_AT_LEAST_5 || !BR2_TOOLCHAIN_GCC_AT_LEAST_5
+
+config BR2_PACKAGE_UC_BASE
+	bool "Unfolded Circle Remote Two base environment"
+	# packages required by the Qt remote-ui app / using the SDK to build the static Qt cross compile toolchain
+	depends on BR2_INSTALL_LIBSTDCPP
+	depends on BR2_USE_WCHAR
+	depends on BR2_TOOLCHAIN_HAS_THREADS_NPTL
+	depends on BR2_HOST_GCC_AT_LEAST_5 # Full C++11
+	depends on BR2_TOOLCHAIN_GCC_AT_LEAST_5 # C++11, GCC_BUG_57694
+	depends on !BR2_ARM_CPU_ARMV4 # needs ARMv5+
+	# no built-in double-conversion support
+	depends on !BR2_arc
+	depends on !BR2_STATIC_LIBS
+	select BR2_PACKAGE_ZLIB
+	select BR2_PACKAGE_PCRE2
+	select BR2_PACKAGE_PCRE2_16
+	select BR2_PACKAGE_LIBOPENSSL_ENABLE_PSK if BR2_PACKAGE_LIBOPENSSL
+	select BR2_PACKAGE_FREETYPE
+	select BR2_PACKAGE_FONTCONFIG
+	select BR2_PACKAGE_JPEG
+	select BR2_PACKAGE_LIBPNG
+	select BR2_PACKAGE_LIBSVG
+	# required by the remote-core service: links to library
+	select BR2_PACKAGE_SWUPDATE
+	select BR2_PACKAGE_DBUS
+	help
+	  Install the base runtime environment for the Unfolded Circle
+	  Remote Two software.
