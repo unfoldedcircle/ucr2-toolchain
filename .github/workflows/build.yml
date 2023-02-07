@@ -1,0 +1,68 @@
+# GitHub Action for creating simple (pre-)releases of the UCR2 toolchain.
+# There are no Buildroot builds involved since they are taking too long for the
+# GitHub runners.
+# - Creates a pre-release if pushed on main branch without a version tag.
+# - Creates a release if pushed on main branch with a version tag.
+---
+  name: "Release"
+    
+  on:
+    push:
+      branches:
+        - main
+      tags:
+        # This is not regex: https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet
+        - v[0-9]+.[0-9]+.[0-9]+*
+
+  env:
+    PROJECT_NAME: ucr2-toolchain
+
+  jobs:
+    release:
+      name: Create Release
+      # push on main without a version = development pre-release
+      if: github.ref == 'refs/heads/main' || contains(github.ref, 'tags/v')
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout ${{ env.PROJECT_NAME}}
+          uses: actions/checkout@v3
+          with:
+            # History of 500 should be more than enough to calculate commit count since last release tag.
+            fetch-depth: 500
+            path: ${{ env.PROJECT_NAME}}
+
+        - name: Fetch all tags to determine version
+          run: |
+            cd ${{ env.PROJECT_NAME}}
+            git fetch origin +refs/tags/*:refs/tags/*
+            git describe --match "v[0-9]*" --tags HEAD --always
+  
+        - name: Get artifact version
+          run: |
+            cd ${{ env.PROJECT_NAME}}
+            APP_VERSION=$(git describe --match "v[0-9]*" --tags HEAD --always)
+            echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
+            echo "TIMESTAMP=$(date +"%Y%m%d_%H%M%S")" >> $GITHUB_ENV
+
+        - name: Create Pre-Release ${{ env.APP_VERSION }}
+          uses: "marvinpinto/action-automatic-releases@latest"
+          if: "!contains(github.ref, 'tags/v')"
+          with:
+            repo_token: "${{ secrets.GITHUB_TOKEN }}"
+            automatic_release_tag: "latest"
+            prerelease: true
+            title: "Development Build ${{ env.APP_VERSION }}"
+            # No files yet, added manually for now
+            #files: |
+            #    *.tar
+
+        - name: Create Release ${{ env.APP_VERSION }}
+          uses: "marvinpinto/action-automatic-releases@latest"
+          if: "contains(github.ref, 'tags/v')"
+          with:
+            repo_token: "${{ secrets.GITHUB_TOKEN }}"
+            prerelease: false
+            # No files yet, added manually for now
+            #files: |
+            #  *.tar
