@@ -12,6 +12,7 @@ TARGETS_CONFIG := $(notdir $(patsubst %_defconfig,%-config,$(wildcard $(DEFCONFI
 TARGETS_MENUCONFIG := $(notdir $(patsubst %_defconfig,%-menuconfig,$(wildcard $(DEFCONFIG_DIR)/*_defconfig)))
 TARGETS_LINUX_MENUCONFIG := $(notdir $(patsubst %_defconfig,%-linux-menuconfig,$(wildcard $(DEFCONFIG_DIR)/*_defconfig)))
 TARGETS_SDK := $(notdir $(patsubst %_defconfig,%-sdk,$(wildcard $(DEFCONFIG_DIR)/*_defconfig)))
+TARGETS_LEGAL_INFO := $(notdir $(patsubst %_defconfig,%-legal-info,$(wildcard $(DEFCONFIG_DIR)/*_defconfig)))
 
 # Set O variable if not already done on the command line
 ifneq ("$(origin O)", "command line")
@@ -22,7 +23,7 @@ endif
 
 .NOTPARALLEL: $(TARGETS) $(TARGETS_CONFIG) $(TARGETS_MENUCONFIG) all
 
-.PHONY: $(TARGETS) $(TARGETS_CONFIG) $(TARGETS_MENUCONFIG) $(TARGETS_SDK) all clean help
+.PHONY: $(TARGETS) $(TARGETS_CONFIG) $(TARGETS_MENUCONFIG) $(TARGETS_SDK) $(TARGETS_LEGAL_INFO) all clean help
 
 all: $(TARGETS)
 
@@ -67,6 +68,10 @@ $(TARGETS_SDK): %-sdk:
 	mkdir -p $(RELEASE_DIR)
 	mv -f $(O)/images/aarch64-buildroot-linux-gnu_sdk-buildroot.tar.gz $(RELEASE_DIR)/ucr2-aarch64-toolchain-$(shell $(BUILDROOT_EXTERNAL)/scripts/git-version.sh)-noqt.tar.gz
 
+$(TARGETS_LEGAL_INFO): %-legal-info:
+	@echo "Creating legal information for $*"
+	$(MAKE) -C $(BUILDROOT) O=$(O) BR2_EXTERNAL=$(BUILDROOT_EXTERNAL) "$*_defconfig"
+	$(MAKE) -C $(BUILDROOT) O=$(O) BR2_EXTERNAL=$(BUILDROOT_EXTERNAL) legal-info
 
 clean:
 	$(MAKE) -C $(BUILDROOT) O=$(O) BR2_EXTERNAL=$(BUILDROOT_EXTERNAL) clean
@@ -80,3 +85,4 @@ help:
 	@echo "Run 'make <target>-config' to initialize buildroot for a target."
 	@echo "Run 'make <target>-menuconfig' to configure a target."
 	@echo "Run 'make <target>-sdk' to build the external toolchain."
+	@echo "Run 'make <target>-legal-info' to gather licenses and create source tarballs."
