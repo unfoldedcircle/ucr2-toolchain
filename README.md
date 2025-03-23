@@ -22,7 +22,7 @@ git clone --recurse-submodules https://github.com/unfoldedcircle/ucr2-toolchain.
 ### Build toolchain with sysroot
 
 ```shell
-./build.sh ucr2-toolchain-sdk
+./build.sh ucr2_toolchain-sdk
 ```
 
 - After a successful build the toolchain archive will be stored in: `./release/ucr2-aarch64-toolchain-$VERSION-noqt.tar.gz`
