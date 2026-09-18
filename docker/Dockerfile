@@ -5,7 +5,7 @@ ARG BUILDROOT_SDK_VERSION_VARIANT=-noqt
 ARG QT_VERSION_MINOR=5.15
 ARG QT_VERSION_PATCH=8
 
-FROM debian:bookworm-slim AS builder
+FROM debian:bookworm-slim@sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171 AS builder
 
 ARG BUILDROOT_SDK_NAME
 ARG BUILDROOT_SDK_VERSION
@@ -104,7 +104,7 @@ RUN rm -Rf ${TOOLCHAIN_PATH}/lib/go \
     rm -Rf ${TOOLCHAIN_PATH}/bin/python* \
     rm -Rf ${TOOLCHAIN_PATH}/include/python*
 
-FROM debian:bookworm-slim
+FROM debian:bookworm-slim@sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171
 
 ARG BUILDROOT_SDK_NAME
 ARG BUILDROOT_SDK_VERSION
