@@ -5,7 +5,7 @@ set -o pipefail
 
 SDK_VERSION=1.0.0
 QT_VERSION_MINOR=5.15
-QT_VERSION_PATCH=8
+QT_VERSION_PATCH=19
 QT_VERSION=$QT_VERSION_MINOR.$QT_VERSION_PATCH
 
 VERSION_ARGS="\
@@ -14,11 +14,11 @@ VERSION_ARGS="\
 --build-arg QT_VERSION_PATCH=$QT_VERSION_PATCH"
 
 # use a local webserver to speed up archive downloads
-# Qt mirrors: https://download.qt.io/archive/qt/5.15/5.15.8/single/qt-everywhere-opensource-src-5.15.8.tar.xz.mirrorlist
+# Qt mirrors: https://download.qt.io/archive/qt/5.15/5.15.19/single/qt-everywhere-opensource-src-5.15.19.tar.xz.mirrorlist
 # QT_MIRROR URL must contain base path **before** `/archive/qt/`
-# Local file server example for SDK_VERSION=1.0.0, QT_VERSION_MINOR=5.15, QT_VERSION_PATCH=8 with files located at:
+# Local file server example for SDK_VERSION=1.0.0, QT_VERSION_MINOR=5.15, QT_VERSION_PATCH=19 with files located at:
 # - toolchain: /archive/ucr2/v1.0.0/ucr2-aarch64-toolchain-1.0.0-noqt.tar.gz
-# - qt:        /qt/5.15/5.15.8/single/qt-everywhere-opensource-src-5.15.8.tar.xz
+# - qt:        /qt/5.15/5.15.19/single/qt-everywhere-opensource-src-5.15.19.tar.xz
 #MIRROR_ARGS="\
 #--build-arg SDK_BASE_URL=http://172.16.16.10/archive/ucr2 \
 #--build-arg QT_MIRROR=http://172.16.16.10"

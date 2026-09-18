@@ -3,7 +3,7 @@ ARG BUILDROOT_SDK_NAME=aarch64-buildroot-linux-gnu_sdk-buildroot
 ARG BUILDROOT_SDK_VERSION=0.6.0
 ARG BUILDROOT_SDK_VERSION_VARIANT=-noqt
 ARG QT_VERSION_MINOR=5.15
-ARG QT_VERSION_PATCH=8
+ARG QT_VERSION_PATCH=19
 
 FROM debian:bookworm-slim@sha256:88200866dfff7ea7f5cbcb6ec7c8a701889efe6fe859fe64d6990e4b07ea4171 AS builder
 
@@ -13,7 +13,7 @@ ARG BUILDROOT_SDK_VERSION_VARIANT
 ARG QT_VERSION_MINOR
 ARG QT_VERSION_PATCH
 ARG SDK_BASE_URL=https://github.com/unfoldedcircle/ucr2-toolchain/releases/download
-# Qt mirrors: https://download.qt.io/archive/qt/5.15/5.15.8/single/qt-everywhere-opensource-src-5.15.8.tar.xz.mirrorlist
+# Qt mirrors: https://download.qt.io/archive/qt/5.15/5.15.19/single/qt-everywhere-opensource-src-5.15.19.tar.xz.mirrorlist
 ARG QT_MIRROR=https://ftp.acc.umu.se/mirror/qt.io/qtproject
 
 ENV TOOLCHAIN_PATH /opt/${BUILDROOT_SDK_NAME}

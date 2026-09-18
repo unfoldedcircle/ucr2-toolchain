@@ -14,7 +14,7 @@ your host.
 docker run --rm -it \
   --user=$(id -u):$(id -g) \
   -v ~/projects/unfoldedcircle/remote-ui:/sources \
-  unfoldedcircle/r2-toolchain-qt-5.15.8-static
+  unfoldedcircle/r2-toolchain-qt-5.15.19-static
 ```
 
 - The static release binary will be accessible on your host at
@@ -29,7 +29,7 @@ QML build parameters can be specified as an optional second argument.
 docker run --rm -it \
   --user=$(id -u):$(id -g) \
   -v ~/projects/unfoldedcircle/remote-ui:/sources \
-  unfoldedcircle/r2-toolchain-qt-5.15.8-static my-project.pro "CONFIG+=static CONFIG+=release"
+  unfoldedcircle/r2-toolchain-qt-5.15.19-static my-project.pro "CONFIG+=static CONFIG+=release"
 ```
 
 ### Manual build
@@ -39,7 +39,7 @@ Start the shell:
 docker run --rm -it \
   --user=$(id -u):$(id -g) \
   -v ~/projects/unfoldedcircle/remote-ui:/sources \
-  unfoldedcircle/r2-toolchain-qt-5.15.8-static bash
+  unfoldedcircle/r2-toolchain-qt-5.15.19-static bash
 ```
 
 Now you can crosscompile the project inside the container:
@@ -61,7 +61,7 @@ make -j$(nproc)
 4. Recommended: local web-server to download the SDK & Qt source archives.  
    E.g. from a Synology NAS Web Station or a simple nginx webserver.
     - SDK archive path: `/archive/ucr2/v1.0.0/ucr2-aarch64-toolchain-1.0.0-noqt.tar.gz`
-    - Qt archive path:  `/archive/qt/5.15/5.15.8/single/qt-everywhere-opensource-src-5.15.8.tar.xz`
+    - Qt archive path:  `/archive/qt/5.15/5.15.19/single/qt-everywhere-opensource-src-5.15.19.tar.xz`
 
 ### Docker Image
 

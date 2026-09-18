@@ -6,7 +6,7 @@ products and is based on [Buildroot](https://buildroot.org/).
 The toolchain contains the [sysroot directory](https://www.baeldung.com/linux/sysroot) for cross-compiling binaries
 targeted for the Remote Two device. It is **not** the embedded Linux system running on the device!
 
-This toolchain is used to build our [Docker cross-compile image with static Qt](https://hub.docker.com/r/unfoldedcircle/r2-toolchain-qt-5.15.8-static)
+This toolchain is used to build our [Docker cross-compile image with static Qt](https://hub.docker.com/r/unfoldedcircle/r2-toolchain-qt-5.15.19-static)
 which can be pulled from Docker Hub. It's a ready-made image to cross-compile the `remote-ui` Qt app for the Remote Two
 device. Therefore, there's usually no need to tinker with this toolchain or compile it yourself, if you simply want to
 build a custom remote-ui app for your device 😎
@@ -46,7 +46,7 @@ TLDR - this is how you cross-compile your Qt project on your host for the Remote
 docker run --rm -it \
   --user=$(id -u):$(id -g) \
   -v ~/projects/unfoldedcircle/remote-ui:/sources \
-  unfoldedcircle/r2-toolchain-qt-5.15.8-static
+  unfoldedcircle/r2-toolchain-qt-5.15.19-static
 ```
 
 Static Qt app will be on your host: `~/projects/unfoldedcircle/remote-ui/binaries/linux-arm64/release/remote-ui` 

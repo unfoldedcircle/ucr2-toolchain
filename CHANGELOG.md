@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 _Changes for the next release will be listed here_
 
+### Changed
+- Docker cross-compile image: Qt 5.15.8 updated to 5.15.19, the final Qt 5.15 release. The Buildroot SDK and the
+  Qt configuration are unchanged; the image is named `unfoldedcircle/r2-toolchain-qt-5.15.19-static`.
+
 ---
 
 ## 1.0.0
