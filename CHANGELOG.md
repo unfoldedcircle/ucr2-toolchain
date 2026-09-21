@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-_Changes for the next release will be listed here_
+### Added
+- Docker build image for the static Linux x64 desktop simulator (`docker-linux-x64/`):
+  `unfoldedcircle/remote-ui-toolchain-qt-5.15.19-static-x64`, Ubuntu 24.04 based, builds a `remote-ui` binary
+  without Qt runtime dependencies for Ubuntu 24.04 / Debian 13 and newer.
 
 ### Changed
 - Docker cross-compile image: Qt 5.15.8 updated to 5.15.19, the final Qt 5.15 release. The Buildroot SDK and the

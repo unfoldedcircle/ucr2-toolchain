@@ -38,6 +38,9 @@ git clone --recurse-submodules https://github.com/unfoldedcircle/ucr2-toolchain.
 
 See [docker/README.md](./docker) how to build and use a cross-compile image with a static Qt version for the Remote Two.
 
+The same idea for the desktop: [docker-linux-x64/README.md](./docker-linux-x64) builds a static Linux x64 `remote-ui`
+desktop simulator that runs on Ubuntu 24.04 / Debian 13 and newer without a Qt installation.
+
 The Docker image is also published in our [Docker Hub repository](https://hub.docker.com/u/unfoldedcircle).
 
 TLDR - this is how you cross-compile your Qt project on your host for the Remote Two:

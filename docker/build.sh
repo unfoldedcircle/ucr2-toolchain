@@ -7,6 +7,7 @@ SDK_VERSION=1.0.0
 QT_VERSION_MINOR=5.15
 QT_VERSION_PATCH=19
 QT_VERSION=$QT_VERSION_MINOR.$QT_VERSION_PATCH
+IMAGE=unfoldedcircle/r2-toolchain-qt-$QT_VERSION-static
 
 VERSION_ARGS="\
 --build-arg BUILDROOT_SDK_VERSION=$SDK_VERSION \
@@ -29,5 +30,5 @@ BUILD_LABELS="\
 --build-arg REVISION=$(git log -1 --format="%H")"
 
 docker build $VERSION_ARGS $MIRROR_ARGS $BUILD_LABELS \
-    -t unfoldedcircle/r2-toolchain-qt-$QT_VERSION-static \
-    -t unfoldedcircle/r2-toolchain-qt-$QT_VERSION-static:$SDK_VERSION .
+    -t $IMAGE \
+    -t $IMAGE:$SDK_VERSION .
