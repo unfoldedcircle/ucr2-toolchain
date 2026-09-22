@@ -54,10 +54,15 @@ make -j$(nproc)
 ## Running the executable
 
 `remote-ui.exe` is self-contained: Qt, its plugins and QML modules, OpenSSL, freetype, harfbuzz and the image
-libraries are linked in, and only Windows system DLLs are used. Graphics: Qt is built with `-opengl dynamic`, so
-it uses the OpenGL driver when one is available and falls back to the bundled ANGLE (OpenGL ES on Direct3D 11)
-otherwise, e.g. in virtual machines. The remote-ui QML uses shader effects (`QtGraphicalEffects`), which the Qt Quick
-software renderer cannot draw, so one of the two GPU paths is required. `QT_OPENGL=angle` forces the ANGLE path.
+libraries are linked in, and only Windows system DLLs are used. Graphics: Qt is built with `-opengl dynamic`, so at
+startup it tries the system `opengl32.dll` (a GPU driver with OpenGL 2.0 or newer), then ANGLE (OpenGL ES on
+Direct3D 11), then the software rasterizer `opengl32sw.dll`. **ANGLE is not part of the static build**: Qt always
+loads it at runtime from `libEGL.dll` and `libGLESv2.dll`, which must be placed next to `remote-ui.exe`, and the
+image does not build ANGLE. In a virtual machine or with old drivers the app does not start without them; get them
+from a [mmozeiko/build-angle](https://github.com/mmozeiko/build-angle/releases) zip (`bin/libEGL.dll`,
+`bin/libGLESv2.dll`, `bin/d3dcompiler_47.dll`) or from the `bin/` directory of a Qt 5.15.2 Windows binary package.
+The remote-ui QML uses shader effects (`QtGraphicalEffects`), which the Qt Quick software renderer cannot draw, so
+one of the OpenGL paths is required. `QT_OPENGL=angle` forces the ANGLE path, `QT_OPENGL=software` the rasterizer.
 
 The app needs the runtime settings from the `remote-ui` README (`UC_MODEL`, `UC_DISPLAY_*`, `UC_TOKEN_PATH`, the
 Poppins and Space Mono fonts) and a running Remote-Core Simulator, e.g. in PowerShell:
@@ -104,5 +109,5 @@ WinSock, Media Foundation for audio, Direct3D 11 for ANGLE).
 
 Why MXE instead of a hand-written Qt cross build like the other two images: MXE carries the MinGW patches Qt 5.15
 needs, builds the toolchain and every dependency from a pinned commit, and configures Qt with `-opengl dynamic`
-(ANGLE included) and `-openssl-linked`, which is what remote-ui needs on Windows. The price is a longer image build
+and `-openssl-linked`, which is what remote-ui needs on Windows. The price is a longer image build
 and a larger image than the Linux x64 one.

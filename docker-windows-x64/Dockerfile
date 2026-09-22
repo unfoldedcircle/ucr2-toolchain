@@ -6,8 +6,9 @@
 #
 # MXE is used instead of a hand-written Qt cross build because it carries the MinGW patches Qt 5.15 needs and
 # builds every dependency (mingw-w64 GCC, OpenSSL, freetype, harfbuzz, ...) reproducibly from a pinned commit.
-# Qt is configured by MXE with `-opengl dynamic`: real OpenGL when a driver is available, otherwise the bundled
-# ANGLE on Direct3D 11. That is what Qt's official Windows binaries do and what the QtGraphicalEffects shaders in
+# Qt is configured by MXE with `-opengl dynamic`: real OpenGL when a driver is available, otherwise ANGLE on
+# Direct3D 11, loaded at runtime from libEGL.dll / libGLESv2.dll next to the executable (not part of the static
+# build, see README.md). That is what Qt's official Windows binaries do and what the QtGraphicalEffects shaders in
 # remote-ui need (the Qt Quick software renderer cannot draw them).
 
 # global default definitions
