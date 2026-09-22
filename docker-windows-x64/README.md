@@ -78,7 +78,7 @@ $env:UC_TOKEN_PATH="C:\path\to\core-simulator\docker\ui-env\ws-token"
 ### Requirements
 
 1. Docker installation
-2. 20 GB free disk space
+2. 15 GB free disk space
 3. Time: MXE builds the mingw-w64 GCC, every dependency and Qt from source, see below.
 
 ### Docker Image
@@ -101,11 +101,14 @@ Ubuntu 24.04, `make`, `git` (qmake runs `git describe` for the app version) and 
 (cross compiler, static libraries, Qt). Qt tools that a command line build does not need (`qml`, `qmlprofiler`,
 `designer.exe`, `linguist.exe`, ...) are removed; MXE's Qt configuration is kept as `/opt/mxe/qt-qconfig.pri`.
 
-Sizes on the reference build: image 3.2 GB uncompressed, 771 MB to pull (the Linux x64 image: 1.3 GB / 316 MB);
-`/opt/mxe/usr` is 2.1 GB, a third of it static libraries remote-ui never links (PostgreSQL, FreeTDS, D-Bus, Mesa
-are qtbase dependencies in MXE), a candidate for trimming. A remote-ui build in the container takes about a minute
-and produces a 65 MB `remote-ui.exe` (already stripped by MXE) that imports only Windows system DLLs (kernel, GDI,
-WinSock, Media Foundation for audio, Direct3D 11 for ANGLE).
+Sizes on the reference build: image 1.5 GB uncompressed, 302 MB to pull (the Linux x64 image: 1.3 GB / 316 MB).
+`/opt/mxe/usr` is 0.9 GB after the trim in the Dockerfile: MXE's host-side build tools (cmake, ninja, meson, ICU,
+glib tools) and the Windows executables of the dependency packages and MXE's test programs (1.2 GB together) are
+removed, the cross compiler and the Qt host tools link nothing from there. Static libraries remote-ui never links
+(PostgreSQL, FreeTDS, D-Bus, Mesa are qtbase dependencies in MXE) stay, they are referenced by Qt's link metadata.
+A remote-ui build in the container takes about a minute and produces a 65 MB `remote-ui.exe` (already stripped by
+MXE) that imports only Windows system DLLs (kernel, GDI, WinSock, Media Foundation for audio, Direct3D 11 for
+ANGLE).
 
 Why MXE instead of a hand-written Qt cross build like the other two images: MXE carries the MinGW patches Qt 5.15
 needs, builds the toolchain and every dependency from a pinned commit, and configures Qt with `-opengl dynamic`
