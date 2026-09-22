@@ -26,8 +26,9 @@
 
       steps:
         - name: Checkout ${{ env.PROJECT_NAME}}
-          uses: actions/checkout@v3
+          uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3.7.0
           with:
+            persist-credentials: false
             # History of 500 should be more than enough to calculate commit count since last release tag.
             fetch-depth: 500
             path: ${{ env.PROJECT_NAME}}
@@ -46,7 +47,7 @@
             echo "TIMESTAMP=$(date +"%Y%m%d_%H%M%S")" >> $GITHUB_ENV
 
         - name: Create Pre-Release ${{ env.APP_VERSION }}
-          uses: "marvinpinto/action-automatic-releases@latest"
+          uses: "marvinpinto/action-automatic-releases@d68defdd11f9dcc7f52f35c1b7c236ee7513bcc1" # latest (repo is archived; no versioned tags)
           if: "!contains(github.ref, 'tags/v')"
           with:
             repo_token: "${{ secrets.GITHUB_TOKEN }}"
@@ -58,7 +59,7 @@
             #    *.tar
 
         - name: Create Release ${{ env.APP_VERSION }}
-          uses: "marvinpinto/action-automatic-releases@latest"
+          uses: "marvinpinto/action-automatic-releases@d68defdd11f9dcc7f52f35c1b7c236ee7513bcc1" # latest (repo is archived; no versioned tags)
           if: "contains(github.ref, 'tags/v')"
           with:
             repo_token: "${{ secrets.GITHUB_TOKEN }}"
